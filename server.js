@@ -14,7 +14,7 @@ app.set("views", path.join(__dirname, "views"));
 const getData = async () => {
     try{
         const res = await axios.get(
-            `https://hackatime.hackclub.com/api/v1/users/my/stats?api_key=${process.env.APIKEY}`,
+            `https://hackatime.hackclub.com/api/v1/users/my/stats?api_key=${process.env.APIKEY}&features=projects`,
             {
                 headers: {
                     Authorization: `Bearer ${process.env.APIKEY}`,

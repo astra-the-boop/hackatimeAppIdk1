@@ -41,9 +41,9 @@
 </style>
 <body>
     <h1>test</h1>
-    <% waka.languages.forEach(lang=>{%>
-        <div class="lang">
-            <b><%=lang.name%></b>:<%=lang.text%>
+    <% waka.projects.forEach(proj=>{%>
+        <div class="proj">
+            <b><%=proj.name%></b>:<%=proj.text%>
         </div>
     <%});%>
 </body>
