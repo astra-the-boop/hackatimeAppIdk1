@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>the wakatime app thingy</title>
+</head>
+<body>
+    <h1>test</h1>
+    <% waka.languages.forEach(lang=>{%>
+        <div class="lang">
+            <b><%=lang.name%></b>:<%=lang.text%>
+        </div>
+    <%});%>
+</body>
+</html>
