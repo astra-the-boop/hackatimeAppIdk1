@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>the wakatime app thingy</title>
-    <meta http-equiv="refresh" content="10">
+<!--    <meta http-equiv="refresh" content="60">-->
 </head>
 <style>
     @font-face {
@@ -41,13 +41,25 @@
     }
 </style>
 <body>
+
     <h1>test</h1>
-    <select id="proj">
-    <% waka.projects.forEach(proj=>{%>
-        <option value="<%=proj.name%>">
-            <%=proj.name%>
-        </option>
-    <%});%>
+    <select id="projSel">
+        <% waka.projects.forEach(projects =>{%>
+        <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+            <%=projects.name%>
+        </option><%});%>
     </select><button>Select project</button>
+    <p id="output"></p>
+
+    <script>
+        document.querySelector("button").addEventListener("click", () => {
+            const select = document.getElementById("projSel");
+            const selOpt = select.options[select.selectedIndex];
+            const projectName = selOpt.value;
+            const timeeee = selOpt.dataset.time; //amazing variable name i know aaaaaaaaa
+
+            document.getElementById("output").textContent = timeeee;
+        })
+    </script>
 </body>
 </html>
