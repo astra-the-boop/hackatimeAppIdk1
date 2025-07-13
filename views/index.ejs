@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>the wakatime app thingy</title>
+    <meta http-equiv="refresh" content="10">
 </head>
 <style>
     @font-face {
@@ -41,10 +42,12 @@
 </style>
 <body>
     <h1>test</h1>
+    <select id="proj">
     <% waka.projects.forEach(proj=>{%>
-        <div class="proj">
-            <b><%=proj.name%></b>:<%=proj.text%>
-        </div>
+        <option value="<%=proj.name%>">
+            <%=proj.name%>
+        </option>
     <%});%>
+    </select><button>Select project</button>
 </body>
 </html>
