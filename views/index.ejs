@@ -39,18 +39,27 @@
         text-align: center;
         font-family: "Phantom Sans";
     }
+    #output{
+        font-size: 10rem;
+    }
+    #ninetyTonsOfTNT{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 </style>
 <body>
 
-    <h1>test</h1>
     <select id="projSel">
         <% waka.projects.forEach(projects =>{%>
         <option value="<%=projects.name%>" data-time="<%=projects.text%>">
             <%=projects.name%>
         </option><%});%>
     </select><button>Select project</button>
-    <p id="output"></p>
-
+    <div id="ninetyTonsOfTNT">
+    <h1 id="output"></h1>
+    </div>
     <script>
         document.querySelector("button").addEventListener("click", () => {
             const select = document.getElementById("projSel");
