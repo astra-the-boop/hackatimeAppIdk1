@@ -56,7 +56,7 @@
         <option value="<%=projects.name%>" data-time="<%=projects.text%>">
             <%=projects.name%>
         </option><%});%>
-    </select><button>Select project</button>
+    </select>
     <div id="ninetyTonsOfTNT">
     <h1 id="output"></h1>
     </div>
@@ -83,7 +83,7 @@
             }
         }
 
-        document.querySelector("button").addEventListener("click", updateTime);
+        document.querySelector("#projSel").addEventListener("change", updateTime);
 
         setInterval(updateTime, 60000);
     </script>
