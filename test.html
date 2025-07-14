@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+  #ringWrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+  }
+
+  #ringWrapper h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-family: "Phantom Sans";
+  }
+</style>
+<div id="ringWrapper">
+  <svg width="300" height="300">
+    <circle cx="150" cy="150" r="140" stroke="#eee" stroke-width="20" fill="none" />
+    <circle id="progressRing" cx="150" cy="150" r="140"
+            stroke="#a633d6" stroke-width="20" fill="none"
+            stroke-linecap="round"
+            transform="rotate(-90 150 150)"
+            stroke-dasharray="879"
+            stroke-dashoffset="879" />
+  </svg>
+  <h1 id="output"></h1>
+</div>
+<script>
+  function setRingProgress(seconds) {
+    const radius = 140;
+    const circumference = 2 * Math.PI * radius;
+    const progress = Math.min(seconds / 3600, 1); // cap at 1 hour
+    const offset = circumference * (1 - progress);
+
+    const ring = document.getElementById("progressRing");
+    ring.style.strokeDashoffset = offset;
+  }
+</script>
+</body>
+</html>
