@@ -74,10 +74,10 @@
     <div id="ninetyTonsOfTNT">
         <div id="ringWrapper">
             <svg width="700" height="700">
-                <circle cx="350" cy="350" r="320" stroke="#eee" stroke-width="30" fill="none" />
+                <circle cx="350" cy="350" r="320" stroke="#eee" stroke-width="60" fill="none" />
                 <circle id="progressRing"
                         cx="350" cy="350" r="320"
-                        stroke="#a633d6" stroke-width="30" fill="none"
+                        stroke="#a633d6" stroke-width="60" fill="none"
                         stroke-linecap="round"
                         transform="rotate(-90 350 350)"
                         stroke-dasharray="2010.62"
@@ -110,8 +110,8 @@
             const latestTime = await fetchTheThingy(projectName);
             if(latestTime){
                 document.getElementById("output").textContent = latestTime.text;
-                let segundo = latestTime.seconds;
-                document.getElementById("progressRing").style.strokeDashoffset = -2010.62 * (1 - segundo / 3600);
+                let segundo = latestTime.seconds % 3600;
+                document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
             }
 
         }
