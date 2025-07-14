@@ -52,8 +52,8 @@
     }
     #ringWrapper{
         position: relative;
-        width: 700px;
-        height: 700px;
+        width: 800px;
+        height: 800px;
         margin: auto;
     }
     #ringWrapper h1{
@@ -92,16 +92,26 @@
     </select>
     <div id="ninetyTonsOfTNT">
         <div id="ringWrapper">
-            <svg width="700" height="700">
-                <circle cx="350" cy="350" r="320" stroke="#eee" stroke-width="60" fill="none" />
-                <circle id="progressRing"
-                        cx="350" cy="350" r="320"
-                        stroke="#a633d6" stroke-width="60" fill="none"
+            <svg width="800" height="800">
+                <circle cx="400" cy="400" r="360" stroke="#333" stroke-width="30" fill="none" />
+                <circle id="outerRing"
+                        cx="400" cy="400" r="360"
+                        stroke="#ec3750" stroke-width="30" fill="none"
                         stroke-linecap="round"
-                        transform="rotate(-90 350 350)"
+                        transform="rotate(-90 400 400)"
+                        stroke-dasharray="2324.78"
+                        stroke-dashoffset="2324.78" />
+
+                <circle cx="400" cy="400" r="320" stroke="#444" stroke-width="50" fill="none" />
+                <circle id="progressRing"
+                        cx="400" cy="400" r="320"
+                        stroke="#a633d6" stroke-width="50" fill="none"
+                        stroke-linecap="round"
+                        transform="rotate(-90 400 400)"
                         stroke-dasharray="2010.62"
                         stroke-dashoffset="2010.62" />
             </svg>
+
 
             <h1 id="output"></h1>
         </div>
@@ -131,6 +141,8 @@
                 document.getElementById("output").textContent = latestTime.text;
                 let segundo = latestTime.seconds % 3600;
                 document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
+                let segundoTheSequel = latestTime.seconds % 18000;
+                document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
             }
 
         }
