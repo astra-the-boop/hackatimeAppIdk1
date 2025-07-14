@@ -61,14 +61,31 @@
     <h1 id="output"></h1>
     </div>
     <script>
-        document.querySelector("button").addEventListener("click", () => {
+        async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
+            try{
+                const res = await fetch("/api/data");
+                const data = await res.json();
+                const project = data.projects.find(p => p.name === iLoveGivingUnintuitiveVariableNames);
+                return project?.text;
+            }catch(err){
+                console.log(`pain in the fucking ass: ${err}`);
+                return null;
+            }
+        }
+
+        async function updateTime(){
             const select = document.getElementById("projSel");
             const selOpt = select.options[select.selectedIndex];
             const projectName = selOpt.value;
-            const timeeee = selOpt.dataset.time; //amazing variable name i know aaaaaaaaa
+            const latestTime = await fetchTheThingy(projectName);
+            if(latestTime){
+                document.getElementById("output").textContent = latestTime;
+            }
+        }
 
-            document.getElementById("output").textContent = timeeee;
-        })
+        document.querySelector("button").addEventListener("click", updateTime);
+
+        setInterval(updateTime, 60000);
     </script>
 </body>
 </html>

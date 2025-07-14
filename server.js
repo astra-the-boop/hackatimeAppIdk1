@@ -40,5 +40,11 @@ app.get("/", async(req, res) => {
     res.render("index", {waka: data.data});
 });
 
+app.get("/api/data", async(req, res) => {
+    const data = await getData();
+    if (!data) return res.status(500).json({error: "failed to fetch the data :("});
+    res.json(data.data);
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`app running on uhhhhhhhhhh localhost:${PORT}`));
