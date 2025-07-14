@@ -80,9 +80,23 @@
         border: 0;
         /*stolen from hc branding lmao*/
     }
-
+    #fullscreen{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        padding: 0.6rem 1rem;
+        font-size: 3rem;
+        border: none;
+        color: white;
+        background-color: transparent;
+    }
+    #fullscreen:hover{
+        cursor: pointer;
+    }
 </style>
 <body>
+    <button id="fullscreen">⛶</button>
 
     <select id="projSel">
         <% waka.projects.forEach(projects =>{%>
@@ -160,6 +174,18 @@
         document.querySelector("#projSel").addEventListener("change", updateTime);
 
         setInterval(updateTime, 60000);
+
+        document.getElementById("fullscreen").addEventListener("click", ()=>
+        {
+            const ohoho = document.documentElement;
+            if (!document.fullscreenElement){
+                ohoho.requestFullscreen().catch(err=>{
+                    console.error(`no full screen for you >:( ${err.message}`)
+                })
+            }else{
+                document.exitFullscreen()
+            }
+        })
     </script>
 </body>
 </html>
