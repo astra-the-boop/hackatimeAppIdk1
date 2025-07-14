@@ -100,6 +100,18 @@
     #fullscreen:hover{
         cursor: pointer;
     }
+    #addProject{
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: inherit;
+        font-family: "Phantom Sans";
+        color: snow;
+        background-color: #333;
+    }
+    #addProject:hover{
+        cursor:pointer;
+    }
     #lightdark{
         position: absolute;
         top: 20px;
@@ -114,6 +126,9 @@
     #lightdark:hover{
         cursor: pointer;
     }
+    #theSecondOne{
+        display:none;
+    }
 </style>
 <body>
     <button id="lightdark">⏀</button>
@@ -124,14 +139,16 @@
         <option value="<%=projects.name%>" data-time="<%=projects.text%>">
             <%=projects.name%>
         </option><%});%>
-    </select> +
+    </select> <div id="theSecondOne">+
      <select class="select" id="projSel2">
          <option value="">[None]</option>
          <% waka.projects.forEach(projects =>{%>
          <option value="<%=projects.name%>" data-time="<%=projects.text%>">
              <%=projects.name%>
          </option><%});%>
-     </select>
+     </select></div>
+
+    <button id="addProject">Add project</button>
     <div id="ninetyTonsOfTNT">
         <div id="ringWrapper">
             <svg width="800" height="800">
@@ -222,6 +239,11 @@
             }else{
                 document.exitFullscreen()
             }
+        });
+
+        document.getElementById("addProject").addEventListener("click", ()=>
+        {
+            document.getElementById("theSecondOne").style.display = "inline-block";
         });
         let lightmode = false;
         document.getElementById("lightdark").addEventListener("click", ()=>
