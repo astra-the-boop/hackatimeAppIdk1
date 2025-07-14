@@ -41,6 +41,10 @@
         background-color: #121217;
         color: snow;
     }
+    b{
+        font-size: 2rem;
+        margin-top: 1rem
+    }
     #output{
         font-size: 10rem;
     }
@@ -68,15 +72,17 @@
         box-sizing: border-box;
         margin: 0;
         min-width: 0;
-        width: 30rem;
+        width: 10rem;
         padding: 8px;
         appearance: none;
         font-size: inherit;
+        text-overflow: ellipsis;
         line-height: inherit;
         border-radius: 4px;
         background-color: #252429;
         color: #ffffff;
         font-family: inherit;
+        margin: 1rem;
         border: 0;
         /*stolen from hc branding lmao*/
     }
@@ -118,7 +124,14 @@
         <option value="<%=projects.name%>" data-time="<%=projects.text%>">
             <%=projects.name%>
         </option><%});%>
-    </select>
+    </select> +
+     <select class="select" id="projSel2">
+         <option value="">[None]</option>
+         <% waka.projects.forEach(projects =>{%>
+         <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+             <%=projects.name%>
+         </option><%});%>
+     </select>
     <div id="ninetyTonsOfTNT">
         <div id="ringWrapper">
             <svg width="800" height="800">
@@ -174,19 +187,28 @@
             const selOpt = select.options[select.selectedIndex];
             const projectName = selOpt.value;
             const latestTime = await fetchTheThingy(projectName);
+            const latestTimeElectricBoogaloo = await fetchTheThingy(document.getElementById("projSel2").options[document.getElementById("projSel2").selectedIndex].value);
             if(latestTime){
-                document.getElementById("output").textContent = latestTime.text;
-                let segundo = latestTime.seconds % 3600;
-                document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
-                let segundoTheSequel = latestTime.seconds % 18000;
-                document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
-                let segundoElectricBoogaloo = latestTime.seconds % 54000;
-                document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
-            }
-
-        }
+                if(document.getElementById("projSel2").value === ""){
+                    document.getElementById("output").textContent = latestTime.text;
+                    let segundo = latestTime.seconds % 3600;
+                    document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
+                    let segundoTheSequel = latestTime.seconds % 18000;
+                    document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
+                    let segundoElectricBoogaloo = latestTime.seconds % 54000;
+                    document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
+                }else{
+                    document.getElementById("output").textContent = readThisFucker(latestTime.seconds + latestTimeElectricBoogaloo.seconds);
+                    let segundo = (latestTime.seconds + latestTimeElectricBoogaloo.seconds) % 3600;
+                    document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
+                    let segundoTheSequel = (latestTime.seconds + latestTimeElectricBoogaloo.seconds) % 18000;
+                    document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
+                    let segundoElectricBoogaloo = (latestTime.seconds + latestTimeElectricBoogaloo.seconds) % 54000;
+                    document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
+                }}}
 
         document.querySelector("#projSel").addEventListener("change", updateTime);
+        document.querySelector("#projSel2").addEventListener("change", updateTime);
 
         setInterval(updateTime, 60000);
 
@@ -206,15 +228,17 @@
         {
             if (!lightmode){
                 lightmode = true;
-                document.body.style.backgroundColor = "snow";
+                document.body.style.backgroundColor = "#dedede";
                 document.body.style.color = "#121217";
                 document.getElementById("fullscreen").style.color = "#121217";
                 document.getElementById("lightdark").style.color = "#121217";
                 document.getElementById("projSel").style.backgroundColor = "#cccccc";
                 document.getElementById("projSel").style.color = "#252429";
-                document.getElementById("notCreativeEnough").style.stroke = "#ddd";
-                document.getElementById("toComeUpWith").style.stroke = "#ccc";
-                document.getElementById("properIdNames").style.stroke = "#bbb";
+                document.getElementById("projSel2").style.backgroundColor = "#cccccc";
+                document.getElementById("projSel2").style.color = "#252429";
+                document.getElementById("notCreativeEnough").style.stroke = "#ccc";
+                document.getElementById("toComeUpWith").style.stroke = "#bbb";
+                document.getElementById("properIdNames").style.stroke = "#aaa";
 
 
             }else{
@@ -225,11 +249,20 @@
                 document.getElementById("fullscreen").style.color = "snow";
                 document.getElementById("projSel").style.backgroundColor = "#252429";
                 document.getElementById("projSel").style.color = "#ffffff";
+                document.getElementById("projSel2").style.backgroundColor = "#252429";
+                document.getElementById("projSel2").style.color = "#ffffff";
                 document.getElementById("notCreativeEnough").style.stroke = "#222";
                 document.getElementById("toComeUpWith").style.stroke = "#333";
                 document.getElementById("properIdNames").style.stroke = "#444";
             }
         });
+
+        function readThisFucker(segundo){
+            //i hate math i hate math i hate math i hate math i hate math i hate math i hate math i hate math
+            hrPart = Math.floor(segundo/3600);
+            mPart = Math.floor(Math.floor(segundo % 3600)/60);
+            return `${hrPart}h ${mPart}m`
+        }
     </script>
 </body>
 </html>
