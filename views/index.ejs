@@ -88,14 +88,29 @@
         padding: 0.6rem 1rem;
         font-size: 3rem;
         border: none;
-        color: white;
+        color: snow;
         background-color: transparent;
     }
     #fullscreen:hover{
         cursor: pointer;
     }
+    #lightdark{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        padding: 0.6rem 1rem;
+        font-size: 3rem;
+        border: none;
+        color: snow;
+        background-color: transparent;
+    }
+    #lightdark:hover{
+        cursor: pointer;
+    }
 </style>
 <body>
+    <button id="lightdark">⏀</button>
     <button id="fullscreen">⛶</button>
 
     <select id="projSel">
@@ -185,7 +200,25 @@
             }else{
                 document.exitFullscreen()
             }
-        })
+        });
+        let lightmode = false;
+        document.getElementById("lightdark").addEventListener("click", ()=>
+        {
+            if (!lightmode){
+                lightmode = true;
+                document.body.style.backgroundColor = "snow";
+                document.body.style.color = "#121217";
+                document.getElementById("fullscreen").style.color = "#121217";
+                document.getElementById("lightdark").style.color = "#121217";
+
+            }else{
+                lightmode = false;
+                document.body.style.backgroundColor = "#121217";
+                document.body.style.color = "snow";
+                document.getElementById("lightdark").style.color = "snow";
+                document.getElementById("fullscreen").style.color = "snow";
+            }
+        });
     </script>
 </body>
 </html>
