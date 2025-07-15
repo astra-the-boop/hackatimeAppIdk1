@@ -137,7 +137,7 @@
     #lightdark:hover{
         cursor: pointer;
     }
-    #theSecondOne{
+    #theSecondOne, #theThirdOne, #theFourthOne, #theFifthOne{
         display:none;
     }
 </style>
@@ -151,13 +151,36 @@
             <%=projects.name%>
         </option><%});%>
     </select> <div id="theSecondOne">+
-     <select class="select" id="projSel2">
-         <option value="">[None]</option>
-         <% waka.projects.forEach(projects =>{%>
-         <option value="<%=projects.name%>" data-time="<%=projects.text%>">
-             <%=projects.name%>
-         </option><%});%>
-     </select></div>
+        <select class="select" id="projSel2">
+            <option value="">[None]</option>
+            <% waka.projects.forEach(projects =>{%>
+            <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+                <%=projects.name%>
+            </option><%});%>
+        </select></div>
+    </select> <div id="theThirdOne">+
+        <select class="select" id="projSel3">
+            <option value="">[None]</option>
+            <% waka.projects.forEach(projects =>{%>
+            <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+                <%=projects.name%>
+            </option><%});%>
+        </select></div>
+    </select> <div id="theFourthOne">+
+        <select class="select" id="projSel4">
+            <option value="">[None]</option>
+            <% waka.projects.forEach(projects =>{%>
+            <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+                <%=projects.name%>
+            </option><%});%>
+        </select></div></select> <div id="theFifthOne">+
+        <select class="select" id="projSel5">
+            <option value="">[None]</option>
+            <% waka.projects.forEach(projects =>{%>
+            <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+                <%=projects.name%>
+            </option><%});%>
+        </select></div>
     <button id="removeProject" style="display: none">Remove project</button>
     <button id="addProject">Add project</button>
     <div id="ninetyTonsOfTNT">
@@ -195,6 +218,8 @@
         </div>
     </div>
     <script>
+        let theThing = 0;
+
         async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
             try{
                 const res = await fetch("/api/data");
@@ -211,32 +236,34 @@
         }
 
         async function updateTime(){
-            const select = document.getElementById("projSel");
-            const selOpt = select.options[select.selectedIndex];
-            const projectName = selOpt.value;
-            const latestTime = await fetchTheThingy(projectName);
-            const latestTimeElectricBoogaloo = await fetchTheThingy(document.getElementById("projSel2").options[document.getElementById("projSel2").selectedIndex].value);
-            if(latestTime){
-                if(document.getElementById("projSel2").value === ""){
-                    document.getElementById("output").textContent = latestTime.text;
-                    let segundo = latestTime.seconds % 3600;
-                    document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
-                    let segundoTheSequel = latestTime.seconds % 18000;
-                    document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
-                    let segundoElectricBoogaloo = latestTime.seconds % 54000;
-                    document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
-                }else{
-                    document.getElementById("output").textContent = readThisFucker(latestTime.seconds + latestTimeElectricBoogaloo.seconds);
-                    let segundo = (latestTime.seconds + latestTimeElectricBoogaloo.seconds) % 3600;
-                    document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
-                    let segundoTheSequel = (latestTime.seconds + latestTimeElectricBoogaloo.seconds) % 18000;
-                    document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
-                    let segundoElectricBoogaloo = (latestTime.seconds + latestTimeElectricBoogaloo.seconds) % 54000;
-                    document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
-                }}}
+            const allSelectors = ["projSel", "projSel2", "projSel3", "projSel4", "projSel5"];
+            let totalSeconds = 0;
 
-        document.querySelector("#projSel").addEventListener("change", updateTime);
-        document.querySelector("#projSel2").addEventListener("change", updateTime);
+            for (let selId of allSelectors){
+                const sel = document.getElementById(selId);
+                if (sel && sel.offsetParent !== null && sel.value !== "") {
+                    const data = await fetchTheThingy(sel.value);
+                    if(data && data.seconds) totalSeconds += data.seconds;
+                }
+            }
+
+            if(totalSeconds > 0){
+                document.getElementById("output").textContent = readThisFucker(totalSeconds);
+                let segundo = totalSeconds % 3600;
+                document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
+                let segundoTheSequel = totalSeconds % 18000;
+                document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
+                let segundoElectricBoogaloo = totalSeconds % 54000;
+                document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
+            } else {
+                document.getElementById("output").textContent = "0h 0m";
+            }
+        }
+
+        ["projSel", "projSel2", "projSel3", "projSel4", "projSel5"].forEach(id => {
+            const sel = document.getElementById(id);
+            if (sel) sel.addEventListener("change", updateTime);
+        });
 
         setInterval(updateTime, 60000);
 
@@ -252,19 +279,29 @@
             }
         });
 
+        idfkAnymore = ["theSecondOne", "theThirdOne", "theFourthOne", "theFifthOne"];
+
         document.getElementById("addProject").addEventListener("click", ()=>
         {
-            document.getElementById("theSecondOne").style.display = "inline-block";
+            document.getElementById(idfkAnymore[theThing]).style.display = "inline-block";
             document.getElementById("removeProject").style.display = "inline-block";
-            document.getElementById("addProject").style.display = "none";
+            theThing++;
+            if(theThing === 4){
+                document.getElementById("addProject").style.display = "none";
+            }
+
         });
-        document.getElementById("removeProject").addEventListener("click", ()=>
-        {
-            document.getElementById("theSecondOne").style.display = "none";
-            document.getElementById("removeProject").style.display = "none";
-            document.getElementById("addProject").style.display = "inline-block";
-            document.getElementById("projSel2").selectedIndex = 0;
-            updateTime();
+        document.getElementById("removeProject").addEventListener("click", () => {
+            if (theThing > 0) {
+                document.getElementById(idfkAnymore[theThing - 1]).style.display = "none";
+                document.getElementById(`projSel${theThing + 1}`).selectedIndex = 0;
+                theThing--;
+                if (theThing === 0) {
+                    document.getElementById("removeProject").style.display = "none";
+                }
+                document.getElementById("addProject").style.display = "inline-block";
+                updateTime();
+            }
         });
         let lightmode = false;
         document.getElementById("lightdark").addEventListener("click", ()=>
