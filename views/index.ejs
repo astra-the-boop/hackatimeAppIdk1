@@ -41,10 +41,7 @@
         background-color: #121217;
         color: snow;
     }
-    b{
-        font-size: 2rem;
-        margin-top: 1rem
-    }
+
     #output{
         font-size: 10rem;
     }
@@ -137,13 +134,41 @@
     #lightdark:hover{
         cursor: pointer;
     }
+    #ringerydoos{
+        position: absolute;
+        top: 20px;
+        left: 120px;
+        z-index: 9999;
+        padding: 0.6rem 1rem;
+        font-size: 3rem;
+        border: none;
+        color: snow;
+        background-color: transparent;
+    }
+    #ringerydoos:hover{
+        cursor: pointer;
+    }
     #theSecondOne, #theThirdOne, #theFourthOne, #theFifthOne{
         display:none;
+    }
+    #heidixOrpheusBestShip{
+        width: 30rem;
+        background-color: #9f9f9f;
+        padding: 1rem 2rem 1rem 2rem;
+        border-radius: 6px;
+        top: 120px;
+        font-size: 1.5rem;
+        left: 120px;
+        text-align: left;
+        position: absolute;
+        color: black;
+        display: none;
     }
 </style>
 <body>
     <button id="lightdark">⏀</button>
     <button id="fullscreen">⛶</button>
+    <button id="ringerydoos">Ⓞ</button>
 
     <select class="select" id="projSel">
         <% waka.projects.forEach(projects =>{%>
@@ -217,6 +242,13 @@
             <h1 id="output"></h1>
         </div>
     </div>
+    <div id="heidixOrpheusBestShip">
+        <p>Inner circle: <input id="innerFucker" value="1" type="number">hr(s)</p>
+        <p>Middle circle: <input id="middleFucker" value="5" type="number">hr(s)</p>
+        <p>Outer circle: <input id="outerFucker" value="15" type="number">hr(s)</p>
+        <p><b>Click the Ⓞ to close this area</b></p>
+        <p><i>Made by Astra with <s>love</s> sleep deprivation</i></p>
+    </div>
     <script>
         let theThing = 0;
 
@@ -250,11 +282,11 @@
             if(totalSeconds > 0){
                 document.getElementById("output").textContent = readThisFucker(totalSeconds);
                 let segundo = totalSeconds % 3600;
-                document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / 3600);
+                document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / (document.getElementById("innerFucker").value * 3600));
                 let segundoTheSequel = totalSeconds % 18000;
-                document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / 18000);
+                document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / (document.getElementById("middleFucker").value * 3600));
                 let segundoElectricBoogaloo = totalSeconds % 54000;
-                document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / 54000);
+                document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / (document.getElementById("outerFucker").value * 3600));
             } else {
                 document.getElementById("output").textContent = "0h 0m";
             }
@@ -265,10 +297,14 @@
             if (sel) sel.addEventListener("change", updateTime);
         });
 
+        ["innerFucker", "middleFucker", "outerFucker"].forEach(fucker => {
+            const cunt = document.getElementById(fucker);
+            if(cunt) cunt.addEventListener("change", updateTime)
+        })
+
         setInterval(updateTime, 60000);
 
-        document.getElementById("fullscreen").addEventListener("click", ()=>
-        {
+        document.getElementById("fullscreen").addEventListener("click", ()=> {
             const ohoho = document.documentElement;
             if (!document.fullscreenElement){
                 ohoho.requestFullscreen().catch(err=>{
@@ -276,6 +312,17 @@
                 })
             }else{
                 document.exitFullscreen()
+            }
+        });
+        let killMe = false;
+        document.getElementById("ringerydoos").addEventListener("click", ()=>{
+            if(!killMe) {
+                killMe = true;
+                document.getElementById("heidixOrpheusBestShip").style.display = "block";
+            }
+            else{
+                killMe = false;
+                document.getElementById("heidixOrpheusBestShip").style.display = "none"
             }
         });
 
@@ -354,6 +401,8 @@
                 document.getElementById("removeProject").style.backgroundColor = "#333";
             }
         });
+
+
 
         function readThisFucker(segundo){
             //i hate math i hate math i hate math i hate math i hate math i hate math i hate math i hate math
