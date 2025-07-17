@@ -166,6 +166,7 @@
     }
 </style>
 <body>
+    <audio src="1hrding.mp3" id="smallDing"></audio>
     <button id="lightdark">⏀</button>
     <button id="fullscreen">⛶</button>
     <button id="ringerydoos">Ⓞ</button>
@@ -251,7 +252,7 @@
     </div>
     <script>
         let theThing = 0;
-
+        let iReallyNeedToFixMySleepSched = ["", 0]
         async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
             try{
                 const res = await fetch("/api/data");
@@ -281,10 +282,17 @@
                 }
             }
 
+            if(iReallyNeedToFixMySleepSched[0] === [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("") && iReallyNeedToFixMySleepSched[1] < document.getElementById("progressRing").style.strokeDashoffset){
+                document.getElementById("smallDing").play();
+            }
+
+            iReallyNeedToFixMySleepSched[0] = [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("");
+
             if(totalSeconds > 0){
                 document.getElementById("output").textContent = readThisFucker(totalSeconds);
                 let segundo = totalSeconds % 3600;
                 document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / (document.getElementById("innerFucker").value * 3600));
+                iReallyNeedToFixMySleepSched[1] = document.getElementById("progressRing").style.strokeDashoffset;
                 let segundoTheSequel = totalSeconds % 18000;
                 document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / (document.getElementById("middleFucker").value * 3600));
                 let segundoElectricBoogaloo = totalSeconds % 54000;
