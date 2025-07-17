@@ -243,9 +243,9 @@
         </div>
     </div>
     <div id="heidixOrpheusBestShip">
-        <p>Inner ring: <input id="innerFucker" value="1" type="number">hr(s)</p>
-        <p>Middle ring: <input id="middleFucker" value="5" type="number">hr(s)</p>
-        <p>Outer ring: <input id="outerFucker" value="15" type="number">hr(s)</p>
+        <p>Inner ring: <input id="innerFucker" value="1" type="number">hr(s) - Color: <input id="innerColor" value="#ec3750" type="color"></p>
+        <p>Middle ring: <input id="middleFucker" value="5" type="number">hr(s) - Color: <input id="middleColor" value="#a633d6" type="color"></p>
+        <p>Outer ring: <input id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p>
         <p><b>Click the Ⓞ to close this area</b></p>
         <p><i>Made by Astra with <s>love</s> sleep deprivation</i></p>
     </div>
@@ -270,7 +270,9 @@
         async function updateTime(){
             const allSelectors = ["projSel", "projSel2", "projSel3", "projSel4", "projSel5"];
             let totalSeconds = 0;
-
+            document.getElementById("progressRing").setAttribute("stroke",document.getElementById("innerColor").value);
+            document.getElementById("outerRing").setAttribute("stroke",document.getElementById("middleColor").value);
+            document.getElementById("outestRing").setAttribute("stroke",document.getElementById("outerColor").value);
             for (let selId of allSelectors){
                 const sel = document.getElementById(selId);
                 if (sel && sel.offsetParent !== null && sel.value !== "") {
@@ -297,7 +299,7 @@
             if (sel) sel.addEventListener("change", updateTime);
         });
 
-        ["innerFucker", "middleFucker", "outerFucker"].forEach(fucker => {
+        ["innerFucker", "middleFucker", "outerFucker", "innerColor", "middleColor", "outerColor"].forEach(fucker => {
             const cunt = document.getElementById(fucker);
             if(cunt) cunt.addEventListener("change", updateTime)
         })
