@@ -167,6 +167,7 @@
 </style>
 <body>
     <audio src="1hrding.mp3" id="smallDing" preload="auto"></audio>
+    <audio src="dingdong.mp3" id="bleghDing" preload="auto"></audio>
     <button id="lightdark">⏀</button>
     <button id="fullscreen">⛶</button>
     <button id="ringerydoos">Ⓞ</button>
@@ -244,15 +245,15 @@
         </div>
     </div>
     <div id="heidixOrpheusBestShip">
-        <p>Inner ring: <input id="innerFucker" value="1" type="number">hr(s) - Color: <input id="innerColor" value="#ec3750" type="color"></p>
-        <p>Middle ring: <input id="middleFucker" value="5" type="number">hr(s) - Color: <input id="middleColor" value="#a633d6" type="color"></p>
-        <p>Outer ring: <input id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p>
+        <p>Inner ring: <input style="width: 3rem" id="innerFucker" value="1" type="number">hr(s) - Color: <input id="innerColor" value="#ec3750" type="color"></p>
+        <p>Middle ring: <input style="width: 3rem" id="middleFucker" value="5" type="number">hr(s) - Color: <input id="middleColor" value="#a633d6" type="color"></p>
+        <p>Outer ring: <input style="width: 3rem" id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p>
         <p><b>Click the Ⓞ to close this area</b></p>
         <p><i>Made by Astra with <s>love</s> sleep deprivation</i></p>
     </div>
     <script>
         let theThing = 0;
-        let iReallyNeedToFixMySleepSched = ["", 0]
+        let iReallyNeedToFixMySleepSched = ["", 0, 0]
         async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
             try{
                 const res = await fetch("/api/data");
@@ -282,9 +283,15 @@
                 }
             }
 
-            if(iReallyNeedToFixMySleepSched[0] === [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("") && iReallyNeedToFixMySleepSched[1] < document.getElementById("progressRing").style.strokeDashoffset){
-                document.getElementById("smallDing").play();
+            if(iReallyNeedToFixMySleepSched[0] === [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("")){
+                if(iReallyNeedToFixMySleepSched[1] < document.getElementById("progressRing").style.strokeDashoffset){
+                    document.getElementById("smallDing").play();
+                }else if(iReallyNeedToFixMySleepSched[2] < document.getElementById("outerRing").style.strokeDashoffset){
+                    document.getElementById("bleghDing").play();
+                }
             }
+
+
 
             iReallyNeedToFixMySleepSched[0] = [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("");
 
@@ -295,6 +302,7 @@
                 iReallyNeedToFixMySleepSched[1] = document.getElementById("progressRing").style.strokeDashoffset;
                 let segundoTheSequel = totalSeconds % 18000;
                 document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / (document.getElementById("middleFucker").value * 3600));
+                iReallyNeedToFixMySleepSched[2] = document.getElementById("outerRing").style.strokeDashoffset;
                 let segundoElectricBoogaloo = totalSeconds % 54000;
                 document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / (document.getElementById("outerFucker").value * 3600));
             } else {
