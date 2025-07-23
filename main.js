@@ -25,8 +25,6 @@ function createWindow() {
         //4. 3Mg + N2    -> Mg3N2
         //5. 4Fe + 3O2   -> 2Fe2O3
         //6. Cl2 + 2NaBr -> 2NaCl + Br2
-
-
     })
 }
 

@@ -16,7 +16,7 @@ function apiKeyBlegh(){
     const filePath = path.join(__dirname, "key.txt");
     try{
         const key = fs.readFileSync(filePath, "utf-8").trim();
-        if(!key)throw new Error("no api key. gib key. (put in key.txt in same directory as app)");
+        if(!key)throw new Error("no api key. gib key. (paste in key.txt in same directory as app)");
         return key;
     }catch(err){
         console.error('couldnt read key.txt ; please create the file and paste your api key inside');
