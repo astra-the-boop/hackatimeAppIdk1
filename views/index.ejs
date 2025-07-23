@@ -427,9 +427,15 @@
 
         function readThisFucker(segundo){
             //i hate math i hate math i hate math i hate math i hate math i hate math i hate math i hate math
-            hrPart = Math.floor(segundo/3600);
-            mPart = Math.floor(Math.floor(segundo % 3600)/60);
-            return `${hrPart}h ${mPart}m`
+            if(segundo >= 0){
+                hrPart = Math.floor(segundo/3600);
+                mPart = Math.floor(Math.floor(segundo % 3600)/60);
+                return `${hrPart}h ${mPart}m`
+            }else{
+                hrPart = Math.floor(-segundo/3600);
+                mPart = Math.floor(Math.floor(-segundo % 3600)/60);
+                return `+${hrPart}h ${mPart}m`
+            }
         }
     </script>
 </body>
