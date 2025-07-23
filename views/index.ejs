@@ -250,13 +250,12 @@
         <p>Middle ring: <input style="width: 3rem" id="middleFucker" value="5" type="number">hr(s) - Color: <input id="middleColor" value="#a633d6" type="color"></p>
         <p>Outer ring: <input style="width: 3rem" id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p><br>
         <p><input type="checkbox" id="cdMd"> Countdown mode</p>
-        <p>Goal: <input type="number" id="goal">hrs</p>
+        <p>Goal: <input type="number" id="goal" style="width: 3rem" value="15">hr(s)</p>
         <p><b>Click the Ⓞ to close this area</b></p>
         <p><i>Made by Astra with <s>love</s> sleep deprivation</i></p>
     </div>
     <script>
         let theThing = 0;
-        let countdown = false;
         let iReallyNeedToFixMySleepSched = ["", 0, 0]
         async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
             try{
@@ -300,7 +299,11 @@
             iReallyNeedToFixMySleepSched[0] = [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("");
 
             if(totalSeconds > 0){
-                document.getElementById("output").textContent = readThisFucker(totalSeconds);
+                if(!document.getElementById("cdMd").checked){
+                    document.getElementById("output").textContent = readThisFucker(totalSeconds);
+                } else{
+                    document.getElementById("output").textContent = readThisFucker(document.getElementById("goal").value * 3600 - totalSeconds);
+                }
                 let segundo = totalSeconds % 3600;
                 document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / (document.getElementById("innerFucker").value * 3600));
                 iReallyNeedToFixMySleepSched[1] = document.getElementById("progressRing").style.strokeDashoffset;
