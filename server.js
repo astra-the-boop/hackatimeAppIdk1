@@ -3,6 +3,7 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 const path = require("path");
 const ejs = require("ejs");
+const fs = require("fs");
 
 
 dotenv.config();
@@ -11,13 +12,25 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+function apiKeyBlegh(){
+    const filePath = path.join(__dirname, "key.txt");
+    try{
+        const key = fs.readFileSync(filePath, "utf-8").trim();
+        if(!key)throw new Error("no api key. gib key. (put in key.txt in same directory as app)");
+        return key;
+    }catch(err){
+        console.error('couldnt read key.txt ; please create the file and paste your api key inside');
+        process.exit(1);
+    }
+}
+
 const getData = async () => {
     try{
         const res = await axios.get(
-            `https://hackatime.hackclub.com/api/v1/users/my/stats?api_key=${process.env.APIKEY}&features=projects`,
+            `https://hackatime.hackclub.com/api/v1/users/my/stats?api_key=${apiKeyBlegh()}&features=projects`,
             {
                 headers: {
-                    Authorization: `Bearer ${process.env.APIKEY}`,
+                    Authorization: `Bearer ${apiKeyBlegh()}`,
                 },
             }
         );
