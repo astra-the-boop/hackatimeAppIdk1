@@ -168,6 +168,7 @@
 <body>
     <audio src="1hrding.mp3" id="smallDing" preload="auto"></audio>
     <audio src="dingdong.mp3" id="bleghDing" preload="auto"></audio>
+    <audio src="budududu.mp3" id="kaboomDing" preload="auto"></audio>
     <button id="lightdark">⏀</button>
     <button id="fullscreen">⛶</button>
     <button id="ringerydoos">Ⓞ</button>
@@ -247,12 +248,15 @@
     <div id="heidixOrpheusBestShip">
         <p>Inner ring: <input style="width: 3rem" id="innerFucker" value="1" type="number">hr(s) - Color: <input id="innerColor" value="#ec3750" type="color"></p>
         <p>Middle ring: <input style="width: 3rem" id="middleFucker" value="5" type="number">hr(s) - Color: <input id="middleColor" value="#a633d6" type="color"></p>
-        <p>Outer ring: <input style="width: 3rem" id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p>
+        <p>Outer ring: <input style="width: 3rem" id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p><br>
+        <p><input type="checkbox" id="cdMd"> Countdown mode</p>
+        <p>Goal: <input type="number" id="goal">hrs</p>
         <p><b>Click the Ⓞ to close this area</b></p>
         <p><i>Made by Astra with <s>love</s> sleep deprivation</i></p>
     </div>
     <script>
         let theThing = 0;
+        let countdown = false;
         let iReallyNeedToFixMySleepSched = ["", 0, 0]
         async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
             try{
@@ -288,10 +292,10 @@
                     document.getElementById("smallDing").play();
                 }else if(iReallyNeedToFixMySleepSched[2] < document.getElementById("outerRing").style.strokeDashoffset){
                     document.getElementById("bleghDing").play();
+                }else if(iReallyNeedToFixMySleepSched[3] < document.getElementById("outestRing").style.strokeDashoffset){
+                    document.getElementById("kaboomDing").play();
                 }
             }
-
-
 
             iReallyNeedToFixMySleepSched[0] = [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("");
 
@@ -305,6 +309,7 @@
                 iReallyNeedToFixMySleepSched[2] = document.getElementById("outerRing").style.strokeDashoffset;
                 let segundoElectricBoogaloo = totalSeconds % 54000;
                 document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / (document.getElementById("outerFucker").value * 3600));
+                iReallyNeedToFixMySleepSched[3] = document.getElementById("outestRing").style.strokeDashoffset;
             } else {
                 document.getElementById("output").textContent = "0h 0m";
             }
@@ -334,14 +339,8 @@
         });
         let killMe = false;
         document.getElementById("ringerydoos").addEventListener("click", ()=>{
-            if(!killMe) {
-                killMe = true;
-                document.getElementById("heidixOrpheusBestShip").style.display = "block";
-            }
-            else{
-                killMe = false;
-                document.getElementById("heidixOrpheusBestShip").style.display = "none"
-            }
+            killMe = !killMe;
+            document.getElementById("heidixOrpheusBestShip").style.display = killMe ? "block" : "none";
         });
 
         idfkAnymore = ["theSecondOne", "theThirdOne", "theFourthOne", "theFifthOne"];
@@ -421,7 +420,6 @@
                 document.getElementById("removeProject").style.backgroundColor = "#333";
             }
         });
-
 
 
         function readThisFucker(segundo){
