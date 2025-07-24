@@ -13,7 +13,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 function apiKeyBlegh(){
-    const filePath = path.join(__dirname, "key.txt");
+    const userData = (electron.app || electron.remote.app).getPath("userData");
+    const filePath = path.join(userData, "key.txt");
     try{
         const key = fs.readFileSync(filePath, "utf-8").trim();
         if(!key)throw new Error("no api key. gib key. (paste in key.txt in same directory as app)");
