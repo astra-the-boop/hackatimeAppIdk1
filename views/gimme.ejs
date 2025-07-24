@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<!--
+"If you can get any more story-length poems like Lovecraft's Psychopompos - by all means 'gimme'
+https://hc-cdn.hel1.your-objectstorage.com/s/v3/838f4ae838aaa7932546f4543799129a327c44e5_gxo-s1_wsaa2kce.png
+-->
+
+
 <html>
 <head>
     <title>gimme</title>
@@ -41,12 +48,30 @@
         background-color: #121217;
         color: snow;
     }
+    a:link, a:visited{
+        color: #939393;
+    }
+    button{
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: inherit;
+        font-family: "Phantom Sans";
+        color: snow;
+        background-color: #333;
+    }
+    input{
+        width: 15rem
+    }
+    button:hover{
+        cursor: pointer;
+    }
 </style>
 <h2>
     <h2>Enter your <a href="https://hackatime.hackclub.com/my/settings">Hackatime API</a> key below</h2>
     <form action="/save-key" method="POST">
-        <input type="text" name="key" required placeholder="Enter your Hackatime API key here"/>
-        <button type="submit">Save API key</button>
+        <input type="password" name="gimme" required placeholder="Enter your Hackatime API key here"/>
+        <br><br><button type="submit">Save API key</button>
     </form>
 </h2>
 </body>

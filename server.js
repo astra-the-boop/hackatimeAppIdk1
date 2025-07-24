@@ -11,17 +11,18 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
+let cachedKey = null;
+const userDataDir = !!process.versions.electron ? require("electron").app.getPath("userData") : __dirname;
+const keyPath = path.join(userDataDir, "key.txt");
 function apiKeyBlegh(){
-    const userData = (electron.app || electron.remote.app).getPath("userData");
-    const filePath = path.join(userData, "key.txt");
+    if(cachedKey) return cachedKey;
     try{
-        const key = fs.readFileSync(filePath, "utf-8").trim();
-        if(!key)throw new Error("no api key. gib key. (paste in key.txt in same directory as app)");
+        const key = fs.readFileSync(keyPath,"utf-8").trim();
+        if(!key) throw new Error("gimme api key");
+        cachedKey = key;
         return key;
     }catch(err){
-        console.error('couldnt read key.txt ; please create the file and paste your api key inside');
-        process.exit(1);
+        return null;
     }
 }
 
@@ -47,12 +48,28 @@ const getData = async () => {
     }
 };
 
+app.use(express.urlencoded({ extended: true }));
+app.get("/enter-key", async (req, res) => {
+    res.render("gimme");
+});
+app.post("/save-key", (req, res) => {
+    const uneCléEstUnParamètreUtiliséEnEntreéd_uneOpérationCryptographique = req.body.gimme?.trim();
+    if(!uneCléEstUnParamètreUtiliséEnEntreéd_uneOpérationCryptographique) return res.status(400).send("no api key");
+
+    fs.writeFileSync(keyPath, uneCléEstUnParamètreUtiliséEnEntreéd_uneOpérationCryptographique, "utf-8");
+    cachedKey = uneCléEstUnParamètreUtiliséEnEntreéd_uneOpérationCryptographique;
+    res.redirect("/")
+});
+
 app.get("/", async(req, res) => {
+    const key = apiKeyBlegh();
+    if(!key) return res.redirect("/enter-key");
     const data = await getData();
     console.log(data);
     if (!data) return res.status(500).send("Failed to load HackaTime data :(")
     res.render("index", {waka: data.data});
 });
+
 
 app.get("/api/data", async(req, res) => {
     const data = await getData();
