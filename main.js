@@ -30,12 +30,25 @@ function createWindow() {
 
 app.whenReady().then(() => {
     //star t exprless servr
+    const userDataPath = app.getPath("userData");
+
     server = spawn("node", ["server.js"], {
         stdio: "inherit",
-        shell: true
+        shell: true,
+        env: {
+            ...process.env,
+            HACKATIME_USERDATA: userDataPath
+        }
     });
 
-    setTimeout(createWindow, 1000);
+    const waitOn = require('wait-on');
+
+    waitOn({ resources: ['http://localhost:3000'], timeout: 10000 })
+        .then(createWindow)
+        .catch(err => {
+            console.error("Server didn't start in time:", err);
+        });
+
 });
 
 app.on('window-all-closed', () => {

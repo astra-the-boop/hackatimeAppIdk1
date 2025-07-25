@@ -11,9 +11,12 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+const userDataDir = process.env.HACKATIME_USERDATA || __dirname;
 let cachedKey = null;
-const userDataDir = !!process.versions.electron ? require("electron").app.getPath("userData") : __dirname;
-const keyPath = path.join(userDataDir, "key.txt");
+const isElectron = !!process.versions.electron;
+const keyPath = path.join(userDataDir, ".explosion");
+
+
 function apiKeyBlegh(){
     if(cachedKey) return cachedKey;
     try{
@@ -76,6 +79,13 @@ app.get("/api/data", async(req, res) => {
     if (!data) return res.status(500).json({error: "failed to fetch the data :("});
     res.json(data.data);
 })
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
+
+
+console.log(keyPath)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`app running on uhhhhhhhhhh localhost:${PORT}`));
