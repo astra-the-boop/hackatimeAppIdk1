@@ -2,6 +2,14 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const {spawn} = require('child_process');
 
+const fs = require("fs");
+const logPath = require("path").join(require("os").homedir(), "explode.log");
+
+process.on("uncaughtException", err => {
+    fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${err.stack}\n`);
+});
+
+
 let mainWindow;
 let server;
 
