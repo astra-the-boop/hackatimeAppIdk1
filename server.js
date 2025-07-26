@@ -29,27 +29,34 @@ function apiKeyBlegh(){
     }
 }
 
-const getData = async () => {
+const getData = async() => {
     try{
+        const key = apiKeyBlegh();
+        if(!key) throw new Error("gimme api key");
+
         const res = await axios.get(
-            `https://hackatime.hackclub.com/api/v1/users/my/stats?api_key=${apiKeyBlegh()}&features=projects`,
+            `https://hackatime.hackclub.com/api/v1/users/my/stats?api_key/${key}&features=projects`,
             {
                 headers: {
-                    Authorization: `Bearer ${apiKeyBlegh()}`,
-                },
+                    Authorization: `Bearer ${key}`
+                }
             }
         );
 
         return res.data;
     }catch(err){
-        if (err.response){
-            console.error("hackatime error ", err.message.status, err.response.data);
+        if(err.response){
+            console.error("hackatime error", err.response.status, err.response.data);
+            if(err.response.status === 403 || err.response.status === 401){
+                if(fs.existsSync(keyPath)) fs.unlinkSync(keyPath);
+                cachedKey = null;
+            }
         }else{
-            console.error("network/api error ", err.message);
+            console.error("network or api error", err.message);
         }
         return null;
     }
-};
+}
 
 app.use(express.urlencoded({ extended: true }));
 app.get("/enter-key", async (req, res) => {
@@ -64,12 +71,13 @@ app.post("/save-key", (req, res) => {
     res.redirect("/")
 });
 
+
 app.get("/", async(req, res) => {
     const key = apiKeyBlegh();
     if(!key) return res.redirect("/enter-key");
     const data = await getData();
     console.log(data);
-    if (!data) return res.status(500).send("Failed to load HackaTime data :(\n<br><form action='/enter-key' method='get'><button>Re-enter your Hackatime API key</button></form>")
+    if (!data) return res.render("explodes");
     res.render("index", {waka: data.data});
 });
 
