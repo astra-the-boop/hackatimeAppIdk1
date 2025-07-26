@@ -69,7 +69,7 @@ app.get("/", async(req, res) => {
     if(!key) return res.redirect("/enter-key");
     const data = await getData();
     console.log(data);
-    if (!data) return res.status(500).send("Failed to load HackaTime data :(")
+    if (!data) return res.status(500).send("Failed to load HackaTime data :(\n<br><form action='/enter-key' method='get'><button>Re-enter your Hackatime API key</button></form>")
     res.render("index", {waka: data.data});
 });
 
@@ -85,7 +85,7 @@ process.on('uncaughtException', (err) => {
 });
 
 
-console.log(keyPath)
+console.log(keyPath);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`app running on uhhhhhhhhhh localhost:${PORT}`));

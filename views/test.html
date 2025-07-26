@@ -1,17 +1,9 @@
 <!DOCTYPE html>
-
-<!--
-"If you can get any more story-length poems like Lovecraft's Psychopompos - by all means 'gimme'
-https://hc-cdn.hel1.your-objectstorage.com/s/v3/838f4ae838aaa7932546f4543799129a327c44e5_gxo-s1_wsaa2kce.png
--->
-
-
-
 <html>
 <head>
-  <title>gimme</title>
+  <meta charset="utf-8">
+  <title>the wakatime app thingy</title>
 </head>
-<body>
 <style>
   @font-face {
     font-family: 'Phantom Sans';
@@ -49,10 +41,63 @@ https://hc-cdn.hel1.your-objectstorage.com/s/v3/838f4ae838aaa7932546f4543799129a
     background-color: #121217;
     color: snow;
   }
-  a:link, a:visited{
-    color: #939393;
+
+  #output{
+    font-size: 10rem;
   }
-  button{
+  #ninetyTonsOfTNT{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  #ringWrapper{
+    position: relative;
+    width: 800px;
+    height: 800px;
+    margin: auto;
+  }
+  #ringWrapper h1{
+    position: absolute;
+    line-height: 1;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  select {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    width: 10rem;
+    padding: 8px;
+    appearance: none;
+    font-size: inherit;
+    text-overflow: ellipsis;
+    line-height: inherit;
+    border-radius: 4px;
+    background-color: #252429;
+    color: #ffffff;
+    font-family: inherit;
+    margin: 1rem;
+    border: 0;
+    /*stolen from hc branding lmao*/
+  }
+  #fullscreen{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 0.6rem 1rem;
+    font-size: 3rem;
+    border: none;
+    color: snow;
+    background-color: transparent;
+  }
+  #fullscreen:hover{
+    cursor: pointer;
+  }
+  #addProject, #apiKeyChange{
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1rem;
@@ -61,19 +106,341 @@ https://hc-cdn.hel1.your-objectstorage.com/s/v3/838f4ae838aaa7932546f4543799129a
     color: snow;
     background-color: #333;
   }
-  input{
-    width: 15rem
+  #addProject:hover, #apiKeyChange:hover{
+    cursor:pointer;
+  }#removeProject{
+     border: none;
+     border-radius: 4px;
+     padding: 0.5rem 1rem;
+     font-size: inherit;
+     font-family: "Phantom Sans";
+     color: snow;
+     background-color: #333;
+   }
+  #removeProject:hover{
+    cursor:pointer;
   }
-  button:hover{
+  #lightdark{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    padding: 0.6rem 1rem;
+    font-size: 3rem;
+    border: none;
+    color: snow;
+    background-color: transparent;
+  }
+  #lightdark:hover{
     cursor: pointer;
   }
+  #ringerydoos{
+    position: absolute;
+    top: 20px;
+    left: 120px;
+    z-index: 9999;
+    padding: 0.6rem 1rem;
+    font-size: 3rem;
+    border: none;
+    color: snow;
+    background-color: transparent;
+  }
+  #ringerydoos:hover{
+    cursor: pointer;
+  }
+  #theSecondOne, #theThirdOne, #theFourthOne, #theFifthOne{
+    display:none;
+  }
+  #heidixOrpheusBestShip{
+    width: 40rem;
+    background-color: #9f9f9f;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 6px;
+    top: 100px;
+    font-size: 1rem;
+    left: 120px;
+    text-align: left;
+    position: absolute;
+    color: black;
+    display: none;
+  }
 </style>
-<h2>
-  <h2>Enter your <a href="https://hackatime.hackclub.com/my/settings">Hackatime API</a> key below</h2>
-  <form action="/save-key" method="POST">
-    <input type="password" name="key" required placeholder="Enter your Hackatime API key here"/>
-    <br><br><button type="submit">Save API key</button>
+<body>
+<audio src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/33d041744706e45c9583e23797cefac80579186a_1hrding_audio.mp4" id="smallDing" preload="auto"></audio>
+<audio src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b031965b38ee394c2c2ec68bfe7f2230bcbe5f9_dingdong_audio.mp4" id="bleghDing" preload="auto"></audio>
+<audio src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/562a58a560a697ea6ef94715eb0626de4bf33e6e_budududu_audio.mp4" id="kaboomDing" preload="auto"></audio>
+<button id="lightdark">⏀</button>
+<button id="fullscreen">⛶</button>
+<button id="ringerydoos">Ⓞ</button>
+
+<select class="select" id="projSel">
+  <% waka.projects.forEach(projects =>{%>
+  <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+    <%=projects.name%>
+  </option><%});%>
+</select> <div id="theSecondOne">+
+  <select class="select" id="projSel2">
+    <option value="">[None]</option>
+    <% waka.projects.forEach(projects =>{%>
+    <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+      <%=projects.name%>
+    </option><%});%>
+  </select></div>
+</select> <div id="theThirdOne">+
+  <select class="select" id="projSel3">
+    <option value="">[None]</option>
+    <% waka.projects.forEach(projects =>{%>
+    <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+      <%=projects.name%>
+    </option><%});%>
+  </select></div>
+</select> <div id="theFourthOne">+
+  <select class="select" id="projSel4">
+    <option value="">[None]</option>
+    <% waka.projects.forEach(projects =>{%>
+    <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+      <%=projects.name%>
+    </option><%});%>
+  </select></div></select> <div id="theFifthOne">+
+  <select class="select" id="projSel5">
+    <option value="">[None]</option>
+    <% waka.projects.forEach(projects =>{%>
+    <option value="<%=projects.name%>" data-time="<%=projects.text%>">
+      <%=projects.name%>
+    </option><%});%>
+  </select></div>
+<button id="removeProject" style="display: none">Remove project</button>
+<button id="addProject">Add project</button>
+<div id="ninetyTonsOfTNT">
+  <div id="ringWrapper">
+    <svg width="800" height="800">
+      <circle id="notCreativeEnough" cx="400" cy="400" r="382" stroke="#222" stroke-width="15" fill="none" />
+      <circle id="outestRing"
+              cx="400" cy="400" r="382"
+              stroke="#ec3750" stroke-width="15" fill="none"
+              stroke-linecap="round"
+              transform="rotate(-90 400 400)"
+              stroke-dasharray="2400.18"
+              stroke-dashoffset="2400.18" />
+      <circle id="toComeUpWith" cx="400" cy="400" r="360" stroke="#333" stroke-width="30" fill="none" />
+      <circle id="outerRing"
+              cx="400" cy="400" r="360"
+              stroke="#a633d6" stroke-width="30" fill="none"
+              stroke-linecap="round"
+              transform="rotate(-90 400 400)"
+              stroke-dasharray="2324.78"
+              stroke-dashoffset="2324.78" />
+
+      <circle id="properIdNames" cx="400" cy="400" r="320" stroke="#444" stroke-width="50" fill="none" />
+      <circle id="progressRing"
+              cx="400" cy="400" r="320"
+              stroke="#338eda" stroke-width="50" fill="none"
+              stroke-linecap="round"
+              transform="rotate(-90 400 400)"
+              stroke-dasharray="2010.62"
+              stroke-dashoffset="2010.62" />
+    </svg>
+
+
+    <h1 id="output"></h1>
+  </div>
+</div>
+<div id="heidixOrpheusBestShip">
+  <p>Inner ring: <input style="width: 3rem" id="innerFucker" value="1" type="number">hr(s) - Color: <input id="innerColor" value="#ec3750" type="color"></p>
+  <p>Middle ring: <input style="width: 3rem" id="middleFucker" value="5" type="number">hr(s) - Color: <input id="middleColor" value="#a633d6" type="color"></p>
+  <p>Outer ring: <input style="width: 3rem" id="outerFucker" value="15" type="number">hr(s) - Color: <input id="outerColor" value="#338eda" type="color"></p><br>
+  <p><input type="checkbox" id="cdMd"> Countdown mode</p>
+  <p>Goal: <input type="number" id="goal" style="width: 3rem" value="15">hr(s)</p>
+  <br>
+  <form action="/enter-key" method="get">
+  <button id="apiKeyChange">Change your API key</button>
   </form>
-</h2>
+  <p><b>Click the Ⓞ to close this area</b></p>
+  <p><i>Made by Astra with <s>love</s> sleep deprivation</i></p>
+</div>
+<script>
+  let theThing = 0;
+  let iReallyNeedToFixMySleepSched = ["", 0, 0]
+  async function fetchTheThingy(iLoveGivingUnintuitiveVariableNames){
+    try{
+      const res = await fetch("/api/data");
+      const data = await res.json();
+      const project = data.projects.find(p => p.name === iLoveGivingUnintuitiveVariableNames);
+      return {
+        text:project?.text,
+        seconds:project?.total_seconds
+      };
+    }catch(err){
+      console.log(`pain in the fucking ass: ${err}`);
+      return null;
+    }
+  }
+
+  async function updateTime(){
+    const allSelectors = ["projSel", "projSel2", "projSel3", "projSel4", "projSel5"];
+    let totalSeconds = 0;
+    document.getElementById("progressRing").setAttribute("stroke",document.getElementById("innerColor").value);
+    document.getElementById("outerRing").setAttribute("stroke",document.getElementById("middleColor").value);
+    document.getElementById("outestRing").setAttribute("stroke",document.getElementById("outerColor").value);
+    for (let selId of allSelectors){
+      const sel = document.getElementById(selId);
+      if (sel && sel.offsetParent !== null && sel.value !== "") {
+        const data = await fetchTheThingy(sel.value);
+        if(data && data.seconds) totalSeconds += data.seconds;
+      }
+    }
+
+    if(iReallyNeedToFixMySleepSched[0] === [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("")){
+      if(iReallyNeedToFixMySleepSched[1] < document.getElementById("progressRing").style.strokeDashoffset){
+        document.getElementById("smallDing").play();
+      }else if(iReallyNeedToFixMySleepSched[2] < document.getElementById("outerRing").style.strokeDashoffset){
+        document.getElementById("bleghDing").play();
+      }else if(iReallyNeedToFixMySleepSched[3] < document.getElementById("outestRing").style.strokeDashoffset){
+        document.getElementById("kaboomDing").play();
+      }
+    }
+
+    iReallyNeedToFixMySleepSched[0] = [document.getElementById('projSel').value, document.getElementById('projSel2').value,document.getElementById('projSel3').value,document.getElementById('projSel4').value,document.getElementById('projSel5').value].sort().join("");
+
+    if(totalSeconds > 0){
+      if(!document.getElementById("cdMd").checked){
+        document.getElementById("output").textContent = readThisFucker(totalSeconds);
+      } else{
+        document.getElementById("output").textContent = readThisFucker(document.getElementById("goal").value * 3600 - totalSeconds);
+      }
+      let segundo = totalSeconds % 3600;
+      document.getElementById("progressRing").style.strokeDashoffset = 2010.62 * (1 - segundo / (document.getElementById("innerFucker").value * 3600));
+      iReallyNeedToFixMySleepSched[1] = document.getElementById("progressRing").style.strokeDashoffset;
+      let segundoTheSequel = totalSeconds % 18000;
+      document.getElementById("outerRing").style.strokeDashoffset = 2324.78 * (1 - segundoTheSequel / (document.getElementById("middleFucker").value * 3600));
+      iReallyNeedToFixMySleepSched[2] = document.getElementById("outerRing").style.strokeDashoffset;
+      let segundoElectricBoogaloo = totalSeconds % 54000;
+      document.getElementById("outestRing").style.strokeDashoffset = 2400.1 * (1 - segundoElectricBoogaloo / (document.getElementById("outerFucker").value * 3600));
+      iReallyNeedToFixMySleepSched[3] = document.getElementById("outestRing").style.strokeDashoffset;
+    } else {
+      document.getElementById("output").textContent = "0h 0m";
+    }
+  }
+
+  ["projSel", "projSel2", "projSel3", "projSel4", "projSel5"].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) sel.addEventListener("change", updateTime);
+  });
+
+  ["innerFucker", "middleFucker", "outerFucker", "innerColor", "middleColor", "outerColor", "cdMd", "goal"].forEach(fucker => {
+    const cunt = document.getElementById(fucker);
+    if(cunt) cunt.addEventListener("change", updateTime)
+  })
+
+  setInterval(updateTime, 60000);
+
+  document.getElementById("fullscreen").addEventListener("click", ()=> {
+    const ohoho = document.documentElement;
+    if (!document.fullscreenElement){
+      ohoho.requestFullscreen().catch(err=>{
+        console.error(`no full screen for you >:( ${err.message}`)
+      })
+    }else{
+      document.exitFullscreen()
+    }
+  });
+  let killMe = false;
+  document.getElementById("ringerydoos").addEventListener("click", ()=>{
+    killMe = !killMe;
+    document.getElementById("heidixOrpheusBestShip").style.display = killMe ? "block" : "none";
+  });
+
+  idfkAnymore = ["theSecondOne", "theThirdOne", "theFourthOne", "theFifthOne"];
+
+  document.getElementById("addProject").addEventListener("click", ()=>
+  {
+    document.getElementById(idfkAnymore[theThing]).style.display = "inline-block";
+    document.getElementById("removeProject").style.display = "inline-block";
+    theThing++;
+    if(theThing === 4){
+      document.getElementById("addProject").style.display = "none";
+    }
+
+  });
+  document.getElementById("removeProject").addEventListener("click", () => {
+    if (theThing > 0) {
+      document.getElementById(idfkAnymore[theThing - 1]).style.display = "none";
+      document.getElementById(`projSel${theThing + 1}`).selectedIndex = 0;
+      theThing--;
+      if (theThing === 0) {
+        document.getElementById("removeProject").style.display = "none";
+      }
+      document.getElementById("addProject").style.display = "inline-block";
+      updateTime();
+    }
+  });
+  let lightmode = false;
+  document.getElementById("lightdark").addEventListener("click", ()=>
+  {
+    if (!lightmode){
+      lightmode = true;
+      document.body.style.backgroundColor = "#dedede";
+      document.body.style.color = "#121217";
+      document.getElementById("fullscreen").style.color = "#121217";
+      document.getElementById("ringerydoos").style.color = "#121217";
+      document.getElementById("lightdark").style.color = "#121217";
+      document.getElementById("projSel").style.backgroundColor = "#cccccc";
+      document.getElementById("projSel").style.color = "#252429";
+      document.getElementById("projSel2").style.backgroundColor = "#cccccc";
+      document.getElementById("projSel2").style.color = "#252429";
+      document.getElementById("projSel3").style.backgroundColor = "#cccccc";
+      document.getElementById("projSel3").style.color = "#252429";
+      document.getElementById("projSel4").style.backgroundColor = "#cccccc";
+      document.getElementById("projSel4").style.color = "#252429";
+      document.getElementById("projSel5").style.backgroundColor = "#cccccc";
+      document.getElementById("projSel5").style.color = "#252429";
+      document.getElementById("notCreativeEnough").style.stroke = "#ccc";
+      document.getElementById("toComeUpWith").style.stroke = "#bbb";
+      document.getElementById("properIdNames").style.stroke = "#aaa";
+      document.getElementById("addProject").style.color = "#252429";
+      document.getElementById("addProject").style.backgroundColor = "#bbb";
+      document.getElementById("removeProject").style.color = "#252429";
+      document.getElementById("removeProject").style.backgroundColor = "#bbb";
+    }else{
+      lightmode = false;
+      document.body.style.backgroundColor = "#121217";
+      document.body.style.color = "snow";
+      document.getElementById("lightdark").style.color = "snow";
+      document.getElementById("ringerydoos").style.color = "snow";
+      document.getElementById("fullscreen").style.color = "snow";
+      document.getElementById("projSel").style.backgroundColor = "#252429";
+      document.getElementById("projSel").style.color = "#ffffff";
+      document.getElementById("projSel2").style.backgroundColor = "#252429";
+      document.getElementById("projSel2").style.color = "#ffffff";
+      document.getElementById("projSel3").style.backgroundColor = "#252429";
+      document.getElementById("projSel3").style.color = "#ffffff";
+      document.getElementById("projSel4").style.backgroundColor = "#252429";
+      document.getElementById("projSel4").style.color = "#ffffff";
+      document.getElementById("projSel5").style.backgroundColor = "#252429";
+      document.getElementById("projSel5").style.color = "#ffffff";
+      document.getElementById("notCreativeEnough").style.stroke = "#222";
+      document.getElementById("toComeUpWith").style.stroke = "#333";
+      document.getElementById("properIdNames").style.stroke = "#444";
+      document.getElementById("addProject").style.color = "snow";
+      document.getElementById("addProject").style.backgroundColor = "#333";
+      document.getElementById("removeProject").style.color = "snow";
+      document.getElementById("removeProject").style.backgroundColor = "#333";
+    }
+  });
+
+
+  function readThisFucker(segundo){
+    //i hate math i hate math i hate math i hate math i hate math i hate math i hate math i hate math
+    if(segundo >= 0){
+      hrPart = Math.floor(segundo/3600);
+      mPart = Math.floor(Math.floor(segundo % 3600)/60);
+      return `${hrPart}h ${mPart}m`
+    }else{
+      hrPart = Math.floor(-segundo/3600);
+      mPart = Math.floor(Math.floor(-segundo % 3600)/60);
+      return `+${hrPart}h ${mPart}m`
+    }
+  }
+</script>
 </body>
 </html>
