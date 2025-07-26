@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const {spawn} = require('child_process');
+require("./server");
 
 const fs = require("fs");
 const logPath = require("path").join(require("os").homedir(), "explode.log");
