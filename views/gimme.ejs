@@ -11,6 +11,17 @@ https://hc-cdn.hel1.your-objectstorage.com/s/v3/838f4ae838aaa7932546f4543799129a
     <title>gimme</title>
 </head>
 <body>
+<script>
+    const {shell} = require("electron");
+
+    document.addEventListener("click", (event) => {
+        const target = event.target;
+        if(target.tagName === "A" && target.href.startsWith("http")) {
+            event.preventDefault();
+            shell.openExternal(target.href);
+        }
+    });
+</script>
 <style>
     @font-face {
         font-family: 'Phantom Sans';
@@ -68,7 +79,7 @@ https://hc-cdn.hel1.your-objectstorage.com/s/v3/838f4ae838aaa7932546f4543799129a
     }
 </style>
 <h2>
-    <h2>Enter your <a href="https://hackatime.hackclub.com/my/settings">Hackatime API</a> key below</h2>
+    <h2>Enter your <a href="https://hackatime.hackclub.com/my/settings" target="_blank" rel="noopener noreferrer">Hackatime API</a> key below</h2>
     <form action="/save-key" method="POST">
         <input type="password" name="gimme" required placeholder="Enter your Hackatime API key here"/>
         <br><br><button type="submit">Save API key</button>
