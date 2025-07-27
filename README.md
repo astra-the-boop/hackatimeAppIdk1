@@ -10,4 +10,7 @@ just ... download and run the file attached in the releases section on the githu
 
 ---
 
+here's a screenshot :D
+<img src="explodeoo.png">
+
 made with much insanity by astra
