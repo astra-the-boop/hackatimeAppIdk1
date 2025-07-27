@@ -8,6 +8,8 @@ you do have to give it your hackatime api key though, but only for the first tim
 ## Installation
 just ... download and run the file attached in the releases section on the github
 
+if it takes a while to launch the first time, don't worry, just be patient... it will launch, just check your DMs or something in the meantime...
+
 ---
 
 here's a screenshot :D
